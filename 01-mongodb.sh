@@ -11,7 +11,20 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
+TIMESTAMP =$(date +"%Y-%m-%d %H:%M:%S")
 if [ $USERID -ne 0 ]; then
-    echo -e "${R}Please run this script with root access${N}" | tee -a $LOGS_FILE
+    echo -e "$TIMESTAMP ${R}Please run this script with root access${N}" | tee -a $LOGS_FILE
     exit 1
 fi
+
+VALIDATE(){
+    if [ $1 -ne 0 ]; then
+        echo -e "$TIMESTAMP [ERROR] ${R}Installing $2 is ... FAILED${N}" | tee -a $LOGS_FILE
+        exit 1
+    else
+        echo -e "$TIMESTAMP [INFO] ${G}Installing $2 is ... SUCCESS${N}" | tee -a $LOGS_FILE
+    fi
+}
+
+cp mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGS_FILE
+VALIDATE $? "Adding MongoDB Repo"
