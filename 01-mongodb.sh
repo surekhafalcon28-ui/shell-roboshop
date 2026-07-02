@@ -11,7 +11,8 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-TIMESTAMP =$(date +"%Y-%m-%d %H:%M:%S")
+# Correct
+TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S)
 if [ $USERID -ne 0 ]; then
     echo -e "$TIMESTAMP ${R}Please run this script with root access${N}" | tee -a $LOGS_FILE
     exit 1
